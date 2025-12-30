@@ -34,7 +34,7 @@ os.makedirs(logs_path, exist_ok=True)
 # Create log file inside the timestamped folder
 LOG_FILE_PATH = os.path.join(logs_path, LOG_FILE)
 
-logger.add(LOG_FILE_PATH, format="{time} {file.name} {line} {level} {message}", level="INFO")
+logger.add(LOG_FILE_PATH, format="{time} | {file.name} | {line} | {level} | {message}", level="INFO")
 
 # Example usage
 # if __name__ == "__main__":
