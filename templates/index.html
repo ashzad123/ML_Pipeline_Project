@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .result-card {
+            margin: 30px 0;
+        }
+
+        .prediction-result {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .prediction-label {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .prediction-score {
+            font-size: 3.5em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .score-unit {
+            font-size: 0.4em;
+            opacity: 0.8;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .details-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        .details-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            text-align: left;
+        }
+
+        .details-table td:first-child {
+            font-weight: 600;
+            color: #667eea;
+            width: 50%;
+        }
+
+        .details-table td:last-child {
+            color: #333;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .success-icon {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+
+        .welcome-message {
+            color: #666;
+            font-size: 1.1em;
+            margin: 20px 0;
+        }
+
+        .welcome-message a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .welcome-message a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .button-group {
+                flex-direction: column;
+            }
+
+            .prediction-score {
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        {% if results %}
+            <h1>🎓 Prediction Results</h1>
+            
+            <div class="success-icon">✅</div>
+
+            <div class="prediction-result">
+                <div class="prediction-label">Predicted Math Score</div>
+                <div class="prediction-score">
+                    {{ results.math_score | round(2) }}
+                    <span class="score-unit">/ 100</span>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <h2 style="color: #666; margin-bottom: 20px;">Student Information</h2>
+                <table class="details-table">
+                    <tr>
+                        <td>Gender</td>
+                        <td>{{ results.gender | title }}</td>
+                    </tr>
+                    <tr>
+                        <td>Race/Ethnicity</td>
+                        <td>{{ results.race_ethnicity | title }}</td>
+                    </tr>
+                    <tr>
+                        <td>Parental Education</td>
+                        <td>{{ results.parental_level_of_education | title }}</td>
+                    </tr>
+                    <tr>
+                        <td>Lunch Type</td>
+                        <td>{{ results.lunch | title }}</td>
+                    </tr>
+                    <tr>
+                        <td>Test Prep Course</td>
+                        <td>{{ results.test_preparation_course | title }}</td>
+                    </tr>
+                    <tr>
+                        <td>Reading Score</td>
+                        <td>{{ results.reading_score }}</td>
+                    </tr>
+                    <tr>
+                        <td>Writing Score</td>
+                        <td>{{ results.writing_score }}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="button-group">
+                <a href="/" class="btn btn-primary">← Make Another Prediction</a>
+            </div>
+        {% else %}
+            <h1>📚 Welcome to Student Performance Predictor</h1>
+            
+            <div class="welcome-message">
+                <p>This tool predicts a student's math score based on their background and other test scores using machine learning.</p>
+                <p style="margin-top: 15px;">Click below to start making predictions:</p>
+            </div>
+
+            <div class="button-group" style="margin-top: 30px;">
+                <a href="/predictdata" class="btn btn-primary">🎯 Start Prediction</a>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
